@@ -1,7 +1,12 @@
-Strain,Lineage,Price,Weight,Terpenes
-Blue Dream,Hybrid,30.0,1g,"Myrcene, Pinene, Caryophyllene"
-Sour Diesel,Sativa,25.0,1g,"Myrcene, Caryophyllene, Limonene"
-Jack Herer,Sativa,28.0,1g,"Terpinolene, Pinene, Myrcene"
-Wedding Cake,Hybrid,35.0,1g,"Limonene, Caryophyllene, Myrcene"
-Granddaddy Purple,Indica,32.0,1g,"Myrcene, Pinene, Caryophyllene"
-Durban Poison,Sativa,27.0,1g,"Terpinolene, Myrcene, Pinene"
+Strain,Lineage,CBG,Genetics,Cultivator,Terpenes,,
+Biscotti Pancake,Hybrid,0.89,,Niche,"Caryophyllene, Limonene, Humiline",,
+Carbon Fiber,Hybrid,1.05,,Niche,"Limonene, Caryophyllene, Myrcene",,Other Terpenes
+Fumez,Hybrid,1.46,,Niche,"Limonene, Caryophyllene, Myrcene",,Pinene
+Josh D,Indica,0.82,,Niche,"Myrcene, Limonene, Caryophyllene",,
+Peach and Chong,Hybrid,0.46,,Niche,"Myrcene, Linalool, Limonene",,
+Rainbow Sherbert,Indica,1.29,,Niche,"Limonene, Caryophyllene, Myrcene",,Linalool
+Super Boof,Hybrid,1.18,,Niche,"Limonene, Caryophyllene, Other Terpenes",,
+Tykoon,Hybrid,1.02,,Niche,"Linalool, Limonene, Caryophyllene",,
+Yellow Mermaid,Hybrid,1.19,,Niche,"Limonene, Linalool, Caryophyllene",,
+Zkittlez Permanent Marker,Hybrid,0.62,,Niche,"Caryophyllene, Limonene, Linalool",,
+Zoap,Hybrid,0.54,,Niche,"Limonene, Caryophyllene, Other Terpenes",,

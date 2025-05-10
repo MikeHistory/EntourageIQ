@@ -1,44 +1,112 @@
 [
   {
-    "Strain":"Blue Dream",
+    "Strain":"Biscotti Pancake",
     "Lineage":"Hybrid",
-    "Price":30.0,
-    "Weight":"1g",
-    "Terpenes":"Myrcene, Pinene, Caryophyllene"
+    "CBG":0.89,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Caryophyllene, Limonene, Humiline",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
   },
   {
-    "Strain":"Sour Diesel",
-    "Lineage":"Sativa",
-    "Price":25.0,
-    "Weight":"1g",
-    "Terpenes":"Myrcene, Caryophyllene, Limonene"
-  },
-  {
-    "Strain":"Jack Herer",
-    "Lineage":"Sativa",
-    "Price":28.0,
-    "Weight":"1g",
-    "Terpenes":"Terpinolene, Pinene, Myrcene"
-  },
-  {
-    "Strain":"Wedding Cake",
+    "Strain":"Carbon Fiber",
     "Lineage":"Hybrid",
-    "Price":35.0,
-    "Weight":"1g",
-    "Terpenes":"Limonene, Caryophyllene, Myrcene"
+    "CBG":1.05,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Limonene, Caryophyllene, Myrcene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":"Other Terpenes"
   },
   {
-    "Strain":"Granddaddy Purple",
+    "Strain":"Fumez",
+    "Lineage":"Hybrid",
+    "CBG":1.46,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Limonene, Caryophyllene, Myrcene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":"Pinene"
+  },
+  {
+    "Strain":"Josh D",
     "Lineage":"Indica",
-    "Price":32.0,
-    "Weight":"1g",
-    "Terpenes":"Myrcene, Pinene, Caryophyllene"
+    "CBG":0.82,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Myrcene, Limonene, Caryophyllene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
   },
   {
-    "Strain":"Durban Poison",
-    "Lineage":"Sativa",
-    "Price":27.0,
-    "Weight":"1g",
-    "Terpenes":"Terpinolene, Myrcene, Pinene"
+    "Strain":"Peach and Chong",
+    "Lineage":"Hybrid",
+    "CBG":0.46,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Myrcene, Linalool, Limonene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
+  },
+  {
+    "Strain":"Rainbow Sherbert",
+    "Lineage":"Indica",
+    "CBG":1.29,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Limonene, Caryophyllene, Myrcene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":"Linalool"
+  },
+  {
+    "Strain":"Super Boof",
+    "Lineage":"Hybrid",
+    "CBG":1.18,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Limonene, Caryophyllene, Other Terpenes",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
+  },
+  {
+    "Strain":"Tykoon",
+    "Lineage":"Hybrid",
+    "CBG":1.02,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Linalool, Limonene, Caryophyllene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
+  },
+  {
+    "Strain":"Yellow Mermaid",
+    "Lineage":"Hybrid",
+    "CBG":1.19,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Limonene, Linalool, Caryophyllene",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
+  },
+  {
+    "Strain":"Zkittlez Permanent Marker",
+    "Lineage":"Hybrid",
+    "CBG":0.62,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Caryophyllene, Limonene, Linalool",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
+  },
+  {
+    "Strain":"Zoap",
+    "Lineage":"Hybrid",
+    "CBG":0.54,
+    "Genetics":null,
+    "Cultivator":"Niche",
+    "Terpenes":"Limonene, Caryophyllene, Other Terpenes",
+    "Unnamed: 6":null,
+    "Unnamed: 7":null
   }
 ]

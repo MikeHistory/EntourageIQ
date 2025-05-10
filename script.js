@@ -10,20 +10,25 @@ q.addEventListener('keydown', e => {
   if (e.key === 'Enter') search(q.value.trim().toLowerCase());
 });
 
-function search(term){
-  const list = document.getElementById('results');
-  if (!term){ list.innerHTML=''; return; }
+function render(filters, list) {
+  const box = document.getElementById('results');
 
-  const hits = db.filter(s =>
-    (s.Terpenes || '').toLowerCase().includes(term)
-  );
+  const hdrParts = [];
+  if (filters.terpenes?.length) hdrParts.push(filters.terpenes.join(', '));
+  if (filters.lineage?.length)  hdrParts.push(filters.lineage.join(', '));
+  if (filters.weights?.length)  hdrParts.push(filters.weights.join(', '));  // keep if you still have weight buttons
+  const title = 'Matches for ' + (hdrParts.join(' · ') || 'all');
 
-  list.innerHTML = hits.length
-    ? hits.map(s => `
-        <li>
-          <div class="strain">${s.Strain}</div>
-          <div class="meta">${s.Lineage} · ${s.Weight} · $${s.Price}</div>
-          <div class="meta">${s.Terpenes}</div>
-        </li>`).join('')
-    : '<li>No strains found.</li>';
+  box.innerHTML = list.length
+    ? `<h3>${title}</h3><ul>${
+        list.map(s => `
+          <li>
+            <div class="strain">${s.Strain}</div>
+            <div class="meta">${s.Lineage} · ${s.Cultivator || 'Unknown Cultivator'}</div>
+            <div class="meta">CBG: ${s.CBG ?? 'n/a'}</div>
+            <div class="meta">${s.Terpenes}</div>
+          </li>
+        `).join('')
+      }</ul>`
+    : '<p>No strains match those filters.</p>';
 }
