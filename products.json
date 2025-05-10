@@ -5,9 +5,7 @@
     "CBG":0.89,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Caryophyllene, Limonene, Humiline",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Caryophyllene, Limonene, Humiline"
   },
   {
     "Strain":"Carbon Fiber",
@@ -15,9 +13,7 @@
     "CBG":1.05,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Limonene, Caryophyllene, Myrcene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":"Other Terpenes"
+    "Terpenes":"Limonene, Caryophyllene, Other Terpenes"
   },
   {
     "Strain":"Fumez",
@@ -25,9 +21,7 @@
     "CBG":1.46,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Limonene, Caryophyllene, Myrcene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":"Pinene"
+    "Terpenes":"Limonene, Caryophyllene, Pinene"
   },
   {
     "Strain":"Josh D",
@@ -35,9 +29,7 @@
     "CBG":0.82,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Myrcene, Limonene, Caryophyllene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Myrcene, Limonene, Caryophyllene"
   },
   {
     "Strain":"Peach and Chong",
@@ -45,9 +37,7 @@
     "CBG":0.46,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Myrcene, Linalool, Limonene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Myrcene, Linalool, Limonene"
   },
   {
     "Strain":"Rainbow Sherbert",
@@ -55,9 +45,7 @@
     "CBG":1.29,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Limonene, Caryophyllene, Myrcene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":"Linalool"
+    "Terpenes":"Limonene, Caryophyllene, Linalool"
   },
   {
     "Strain":"Super Boof",
@@ -65,9 +53,7 @@
     "CBG":1.18,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Limonene, Caryophyllene, Other Terpenes",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Limonene, Caryophyllene, Other Terpenes"
   },
   {
     "Strain":"Tykoon",
@@ -75,9 +61,7 @@
     "CBG":1.02,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Linalool, Limonene, Caryophyllene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Linalool, Limonene, Caryophyllene"
   },
   {
     "Strain":"Yellow Mermaid",
@@ -85,9 +69,7 @@
     "CBG":1.19,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Limonene, Linalool, Caryophyllene",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Limonene, Linalool, Caryophyllene"
   },
   {
     "Strain":"Zkittlez Permanent Marker",
@@ -95,9 +77,7 @@
     "CBG":0.62,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Caryophyllene, Limonene, Linalool",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Caryophyllene, Limonene, Linalool"
   },
   {
     "Strain":"Zoap",
@@ -105,8 +85,6 @@
     "CBG":0.54,
     "Genetics":null,
     "Cultivator":"Niche",
-    "Terpenes":"Limonene, Caryophyllene, Other Terpenes",
-    "Unnamed: 6":null,
-    "Unnamed: 7":null
+    "Terpenes":"Limonene, Caryophyllene, Other Terpenes"
   }
 ]
