@@ -1,72 +1,64 @@
+/******** load data *********/
 let db = [];
-fetch('products.json')
+fetch("products.json")
   .then(r => r.json())
-  .then(d => db = d)
-  .then(() => render())           // initial render
-  .catch(err => alert('Could not load products: '+err));
+  .then(d => (db = d))
+  .then(render)
+  .catch(e => alert("Could not load data: " + e));
 
-/********* helpers to collect selected filters *********/
-const getSelectedText = (sel) =>
-  [...document.querySelectorAll(sel+'.selected')]
-       .map(el => el.dataset.lineage || el.dataset.terp);
+/******** utilities *********/
+const qs = sel => [...document.querySelectorAll(sel)];
+const selected = row =>
+  qs(`${row} .chip.selected`).map(el => el.dataset.terp || el.dataset.lineage);
 
-function clearLineage(){ document.querySelectorAll('#lineage-row .selected')
-  .forEach(el => el.classList.remove('selected')); render(); }
-function clearTerps(){ document.querySelectorAll('#terpene-row .selected')
-  .forEach(el => el.classList.remove('selected')); render(); }
+function clearTerps()   { qs("#terpene-row  .selected").forEach(el=>el.classList.remove("selected")); render(); }
+function clearLineage() { qs("#lineage-row .selected").forEach(el=>el.classList.remove("selected")); render(); }
 
-/********* click-toggle on all chips *********/
-document.querySelectorAll('.chip').forEach(chip=>{
-  chip.addEventListener('click',()=>{
-    chip.classList.toggle('selected');
+/******** chip toggles *********/
+qs(".chip").forEach(chip =>
+  chip.addEventListener("click", () => {
+    chip.classList.toggle("selected");
     render();
-  });
-});
+  })
+);
 
-/********* main filter + render *********/
-function render(){
-  const selTerps   = getSelectedText('#terpene-row .chip');
-  const selLineage = getSelectedText('#lineage-row .chip');
+/******** main render *********/
+function render() {
+  const terps   = selected("#terpene-row");
+  const lineage = selected("#lineage-row");
 
+  /* ---- filter ---- */
   let list = db.slice();
-
-  if (selTerps.length){
-    selTerps.forEach(t=>{
+  if (terps.length){
+    terps.forEach(t=>{
       list = list.filter(s =>
-        (s.Terpenes || '').toLowerCase().includes(t.toLowerCase()));
+        (s.Terpenes || "").toLowerCase().includes(t.toLowerCase())
+      );
     });
   }
-  /* ---------- sort by rank of first selected terp ---------- */
-if (selTerps.length === 1){
-  const term = selTerps[0].toLowerCase();
-  list.sort((a, b) => {
-    const ai = (a.Terpenes || '').toLowerCase().indexOf(term);
-    const bi = (b.Terpenes || '').toLowerCase().indexOf(term);
-    // strains where term not found get big index (push to bottom)
-    return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-  });
-} else if (selTerps.length > 1){
-  /* simple score: sum of indexes (lower is better) */
-  list.sort((a, b) => {
-    const score = s => selTerps.reduce((sum, t)=>{
-       const i = (s.Terpenes || '').toLowerCase().indexOf(t.toLowerCase());
-       return sum + (i === -1 ? 999 : i);
-    }, 0);
-    return score(a) - score(b);
-  });
-}
-  if (selLineage.length){
-    list = list.filter(s => selLineage.includes(s.Lineage));
+  if (lineage.length){
+    list = list.filter(s => lineage.includes(s.Lineage));
   }
 
-  const box = document.getElementById('results');
+  /* ---- rank by first-selected terp ---- */
+  if (terps.length === 1){
+    const term = terps[0].toLowerCase();
+    list.sort((a,b)=>{
+      const ai = (a.Terpenes||"").toLowerCase().indexOf(term);
+      const bi = (b.Terpenes||"").toLowerCase().indexOf(term);
+      return (ai===-1?999:ai) - (bi===-1?999:bi);
+    });
+  }
+
+  /* ---- render ---- */
+  const box = document.getElementById("results");
   box.innerHTML = list.length
-    ? `<ul>${list.map(s => `
+    ? `<ul>${list.map(s=>`
         <li>
           <div class="strain">${s.Strain}</div>
-          <div class="meta">${s.Lineage} · ${s.Cultivator || 'Unknown'}</div>
-          <div class="meta">CBG: ${s.CBG ?? 'n/a'}</div>
+          <div class="meta">${s.Lineage} · ${s.Cultivator || "Unknown"}</div>
+          <div class="meta">CBG: ${s.CBG ?? "n/a"}</div>
           <div class="meta">${s.Terpenes}</div>
-        </li>`).join('')}</ul>`
-    : '<p>No strains found.</p>';
+        </li>`).join("")}</ul>`
+    : "<p>No strains found.</p>";
 }

@@ -1,68 +1,105 @@
-/******** load data *********/
-let db = [];
-fetch("products.json")
-  .then(r => r.json())
-  .then(d => (db = d))
-  .then(render)
-  .catch(e => alert("Could not load data: " + e));
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EntourageIQ · Strain Finder</title>
+  
+  <!-- Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
 
-/******** utilities *********/
-const qs = (sel) => [...document.querySelectorAll(sel)];
-const selected = (row) =>
-  qs(`${row} .chip.selected`).map((el) => el.dataset.terp || el.dataset.lineage);
+  <style>
+    /* ========= CSS VARS ========= */
+    :root{
+      --hybrid:#000000;
+      --indica:#7E3AED;
+      --sativa:#F97316;
+      --cbg:#0EA5E9;          /* bluish for CBG chip */
+    }
 
-function clearTerps()   { qs("#terpene-row  .selected").forEach(el=>el.classList.remove("selected")); render(); }
-function clearLineage() { qs("#lineage-row .selected").forEach(el=>el.classList.remove("selected")); render(); }
+    /* ========= RESETS ========= */
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
 
-/******** chip toggles *********/
-qs(".chip").forEach((chip) =>
-  chip.addEventListener("click", () => {
-    chip.classList.toggle("selected");
-    render();
-  })
-);
+    body{
+      background:#fff;color:#111;line-height:1.4;
+      padding:24px;max-width:900px;margin:auto;
+    }
 
-/******** main render *********/
-function render() {
-  const terps   = selected("#terpene-row");
-  const lineage = selected("#lineage-row");
+    h1{font-size:2rem;font-weight:600;margin-bottom:32px;}
+    h2{font-size:1.25rem;font-weight:600;margin-top:32px;}
 
-  /* ---- filter ---- */
-  let list = db.slice();
-  if (terps.length) {
-    terps.forEach((t) => {
-      list = list.filter((s) =>
-        (s.Terpenes || "").toLowerCase().includes(t.toLowerCase())
-      );
-    });
-  }
-  if (lineage.length) {
-    list = list.filter((s) => lineage.includes(s.Lineage));
-  }
+    /* ========= FILTER CHIPS ========= */
+    .filter-row{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0;}
 
-  /* ---- rank by position of first terp (if single terp selected) ---- */
-  if (terps.length === 1) {
-    const term = terps[0].toLowerCase();
-    list.sort((a, b) => {
-      const ai = (a.Terpenes || "").toLowerCase().indexOf(term);
-      const bi = (b.Terpenes || "").toLowerCase().indexOf(term);
-      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
-    });
-  }
+    .chip{
+      display:flex;align-items:center;gap:14px;
+      padding:14px 22px;
+      background:#f7f7f7;
+      border-radius:22px;
+      cursor:pointer;
+      transition:background .15s,color .15s;
+      min-width:150px;
+    }
+    .chip:hover{background:#ebebeb;}
 
-  /* ---- render ---- */
-  const box = document.getElementById("results");
-  box.innerHTML = list.length
-    ? `<ul>${list
-        .map(
-          (s) => `
-      <li>
-        <div class="strain">${s.Strain}</div>
-        <div class="meta">${s.Lineage} · ${s.Cultivator || "Unknown"}</div>
-        <div class="meta">CBG: ${s.CBG ?? "n/a"}</div>
-        <div class="meta">${s.Terpenes}</div>
-      </li>`
-        )
-        .join("")}</ul>`
-    : "<p>No strains found.</p>";
-}
+    /* highlight */
+    .chip.selected{color:#fff;background:#2563EB;box-shadow:0 0 0 2px #2563EB inset;}
+    .chip.selected .badge{background:rgba(255,255,255,.25);border-color:#fff;color:#fff;}
+
+    /* lineage‑specific highlight override */
+    .chip.hybrid.selected {background:var(--hybrid); box-shadow:0 0 0 2px var(--hybrid) inset;}
+    .chip.indica.selected {background:var(--indica); box-shadow:0 0 0 2px var(--indica) inset;}
+    .chip.sativa.selected {background:var(--sativa); box-shadow:0 0 0 2px var(--sativa) inset;}
+    .chip.cbg.selected    {background:var(--cbg);    box-shadow:0 0 0 2px var(--cbg) inset;}
+
+    .chip span.badge{
+      display:inline-flex;justify-content:center;align-items:center;
+      width:28px;height:28px;border-radius:6px;font-size:.8rem;font-weight:600;
+      border:2px solid currentColor;color:currentColor;
+    }
+    .chip .count{opacity:.6;margin-left:4px;}
+
+    /* ========= RESULTS ========= */
+    #results ul{list-style:none;margin-top:32px;}
+    #results li{background:#f2f2f2;border-radius:6px;padding:16px;margin-bottom:12px;}
+    .strain{font-weight:600;margin-bottom:4px;}
+    .meta{font-size:.9rem;color:#555;}
+  </style>
+</head>
+
+<body>
+  <h1>Quick Terpene Search</h1>
+
+  <!-- ===== TERPENE FILTER ROW ===== -->
+  <section>
+    <h2>Terpenes</h2>
+    <div class="filter-row" id="terpene-row">
+      <div class="chip terp" data-terp="Myrcene"       ><span class="badge">M</span>Myrcene</div>
+      <div class="chip terp" data-terp="Limonene"      ><span class="badge">Li</span>Limonene</div>
+      <div class="chip terp" data-terp="Caryophyllene" ><span class="badge">Ca</span>Caryophyllene</div>
+      <div class="chip terp" data-terp="Linalool"      ><span class="badge">Ll</span>Linalool</div>
+      <div class="chip terp" data-terp="Pinene"        ><span class="badge">P</span>Pinene</div>
+      <div class="chip terp" data-terp="Terpinolene"   ><span class="badge">T</span>Terpinolene</div>
+      <a style="margin-left:auto;font-size:.9rem;text-decoration:underline;cursor:pointer" onclick="clearTerps()">Deselect all</a>
+    </div>
+  </section>
+
+  <!-- ===== LINEAGE FILTER ROW ===== -->
+  <section>
+    <h2>Lineage</h2>
+    <div class="filter-row" id="lineage-row">
+      <div class="chip hybrid" data-lineage="Hybrid"><span class="badge">H</span>Hybrid   </div>
+      <div class="chip indica" data-lineage="Indica"><span class="badge">I</span>Indica   </div>
+      <div class="chip sativa" data-lineage="Sativa"><span class="badge">S</span>Sativa   </div>
+      <div class="chip cbg"    data-lineage="CBG"   ><span class="badge">C</span>CBG      </div>
+      <a style="margin-left:auto;font-size:.9rem;text-decoration:underline;cursor:pointer" onclick="clearLineage()">Deselect all</a>
+    </div>
+  </section>
+
+  <!-- ===== RESULTS AREA ===== -->
+  <div id="results"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
