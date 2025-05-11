@@ -6,176 +6,132 @@
   <title>EntourageIQ · Strain Finder</title>
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
-    :root{
-      --hybrid:#000;        /* lineage border colours */
-      --indica:#7E3AED;
-      --sativa:#F97316;
-      --cbd:#64748B;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
-
-    body{
-      background:#fff;
-      color:#111;
-      line-height:1.4;
-      padding:24px;
-      max-width:900px;
-      margin:auto;
+    /* ========= CSS VARIABLES ========= */
+    :root {
+      --hybrid: #000;       /* lineage badge colours */
+      --indica: #7E3AED;
+      --sativa: #F97316;
+      --cbd:    #64748B;
     }
 
-    h1{
-      font-size:2rem;
-      font-weight:600;
-      margin-bottom:24px;
+    /* ========= RESETS ========= */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+    /* ========= LAYOUT ========= */
+    body {
+      background: #fff;
+      color: #111;
+      line-height: 1.4;
+      padding: 24px;
+      max-width: 900px;
+      margin: auto;
+    }
+    h1 { font-size: 2rem; font-weight: 600; margin-bottom: 24px; }
+
+    /* optional search bar (can delete later) */
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #4ade80;
+      border-radius: 6px;
+      font-size: 1rem;
+      margin-bottom: 32px;
     }
 
-    /* (optional) text-search bar – delete if unused */
-    input[type="text"]{
-      width:100%;
-      padding:14px 18px;
-      border:2px solid #4ade80;
-      border-radius:6px;
-      font-size:1rem;
-      margin-bottom:32px;
+    /* ========= FILTER CHIPS ========= */
+    .filter-row { display: flex; gap: 18px; flex-wrap: wrap; margin: 24px 0; }
+
+    .chip {
+      display: flex; align-items: center;
+      padding: 14px 22px;
+      background: #f7f7f7;
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      min-width: 160px;
+    }
+    .chip:hover { background: #ebebeb; }
+
+    /* highlighted selection */
+    .chip.selected { background: #4ade80; color: #fff; }
+    .chip.selected .badge {
+      border-color: #fff;
+      background: rgba(255,255,255,.2);
+      color: #fff;
     }
 
-    /* ---------- filter chips ---------- */
-    .filter-row{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0;}
-    .chip{
-      display:flex;align-items:center;
-      padding:14px 22px;
-      background:#f7f7f7;
-      border-radius:22px;
-      cursor:pointer;
-      transition:background .2s,color .2s;
-      min-width:160px;
+    .chip span.badge {
+      display: inline-flex; justify-content: center; align-items: center;
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      font-size: .8rem; font-weight: 600;
+      margin-right: 14px;
     }
-    .chip:hover{background:#ebebeb;}
+    /* lineage badge borders */
+    .chip.hybrid   span.badge { border: 2px solid var(--hybrid);  color: var(--hybrid);  }
+    .chip.indica   span.badge { border: 2px solid var(--indica);  color: var(--indica);  }
+    .chip.sativa   span.badge { border: 2px solid var(--sativa);  color: var(--sativa);  }
+    .chip.cbd      span.badge { border: 2px solid var(--cbd);     color: var(--cbd);     }
 
-    /* highlight when selected */
-    .chip.selected{
-      background:#4ade80;      /* green fill */
-      color:#fff;
-    }
-    .chip.selected .badge{
-      border-color:#fff;
-      background:rgba(255,255,255,.2);
-      color:#fff;
-    }
+    .chip .count { opacity: .6; margin-left: 4px; }
 
-    .chip span.badge{
-      display:inline-flex;justify-content:center;align-items:center;
-      width:28px;height:28px;border-radius:6px;font-size:.8rem;font-weight:600;
-      margin-right:14px;
+    /* ========= RESULTS ========= */
+    #results ul { list-style: none; margin-top: 32px; }
+    #results li {
+      background: #f2f2f2;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 12px;
     }
-    /* lineage badge colours */
-    .chip.hybrid   span.badge{border:2px solid var(--hybrid);color:var(--hybrid);}
-    .chip.indica   span.badge{border:2px solid var(--indica);color:var(--indica);}
-    .chip.sativa   span.badge{border:2px solid var(--sativa);color:var(--sativa);}
-    .chip.cbd      span.badge{border:2px solid var(--cbd);color:var(--cbd);}
-
-    .chip .count{opacity:.6;margin-left:4px;}
-
-    /* ---------- results list ---------- */
-    #results ul{list-style:none;margin-top:32px;}
-    #results li{
-      background:#f2f2f2;
-      border-radius:6px;
-      padding:16px;
-      margin-bottom:12px;
-    }
-    .strain{font-weight:600;margin-bottom:4px;}
-    .meta{font-size:.9rem;color:#555;}
+    .strain { font-weight: 600; margin-bottom: 4px; }
+    .meta   { font-size: .9rem; color: #555; }
   </style>
 </head>
 
 <body>
+  <!-- ================= HEADER ================= -->
   <h1>Quick Terpene Search</h1>
-  <!-- search bar (remove if you rely only on chips) -->
-  <input id="q" type="text" placeholder="type a terpene & hit Enter…" autofocus /><!-- terpene chips -->
-<section>
-  <h2 style="margin-top:32px;font-size:1.25rem;font-weight:600;">Terpenes</h2>
-  <div class="filter-row" id="terpene-row">
-    <div class="chip terp" data-terp="Myrcene"><span class="badge">M</span>Myrcene</div>
-    <div class="chip terp" data-terp="Limonene"><span class="badge">Li</span>Limonene</div>
-    <div class="chip terp" data-terp="Caryophyllene"><span class="badge">Ca</span>Caryophyllene</div>
-    <div class="chip terp" data-terp="Linalool"><span class="badge">Ll</span>Linalool</div>
-    <div class="chip terp" data-terp="Pinene"><span class="badge">P</span>Pinene</div>
-    <div class="chip terp" data-terp="Terpinolene"><span class="badge">T</span>Terpinolene</div>
-    <a style="margin-left:auto;font-size:.9rem;text-decoration:underline;cursor:pointer"
-       onclick="clearTerps()">Deselect all</a>
-  </div>
-</section><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EntourageIQ · Strain Finder</title>
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-  <style>
-    :root{
-      --hybrid:#000;/* placeholder border colors */
-      --indica:#7E3AED;
-      --sativa:#F97316;
-      --cbd:#64748B;
-    }
-    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
-    body{background:#fff;color:#111;line-height:1.4;padding:24px;max-width:900px;margin:auto;}
-    h1{font-size:2rem;font-weight:600;margin-bottom:24px;}
-    input[type="text"]{width:100%;padding:14px 18px;border:2px solid #4ade80;border-radius:6px;font-size:1rem;margin-bottom:32px;}
-    /* filter chips */
-    .filter-row{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0;}
-    .chip{display:flex;align-items:center;padding:14px 22px;background:#f7f7f7;border-radius:22px;cursor:pointer;transition:background .2s;min-width:160px;}
-    .chip:hover{background:#ebebeb;}
-    .chip.selected{background:#e0e7ff;}
-    .chip span.badge{display:inline-flex;justify-content:center;align-items:center;width:28px;height:28px;border-radius:6px;font-size:.8rem;font-weight:600;margin-right:14px;}
-    .chip.hybrid span.badge{border:2px solid var(--hybrid);color:var(--hybrid);} /* customize colors as you like */
-    .chip.indica span.badge{border:2px solid var(--indica);color:var(--indica);} 
-    .chip.sativa span.badge{border:2px solid var(--sativa);color:var(--sativa);} 
-    .chip.cbd span.badge{border:2px solid var(--cbd);color:var(--cbd);} 
-    .chip .count{opacity:.6;margin-left:4px;}
-    /* results */
-    #results ul{list-style:none;margin-top:32px;}
-    #results li{background:#f2f2f2;border-radius:6px;padding:16px;margin-bottom:12px;}
-    .strain{font-weight:600;margin-bottom:4px;}
-    .meta{font-size:.9rem;color:#555;}
-  </style>
-</head>
-<body>
-  <h1>Quick Terpene Search</h1>
-  <!-- search bar -->
-  <input id="q" type="text" placeholder="type a terpene & hit Enter…" autofocus />
 
-  <!-- lineage filter row (static UI for now) -->
+  <!-- ================= TERPENE FILTERS ================= -->
+  <section>
+    <h2 style="margin-top:32px;font-size:1.25rem;font-weight:600;">Terpenes</h2>
+    <div class="filter-row" id="terpene-row">
+      <div class="chip terp" data-terp="Myrcene"       ><span class="badge">M</span>Myrcene</div>
+      <div class="chip terp" data-terp="Limonene"      ><span class="badge">Li</span>Limonene</div>
+      <div class="chip terp" data-terp="Caryophyllene" ><span class="badge">Ca</span>Caryophyllene</div>
+      <div class="chip terp" data-terp="Linalool"      ><span class="badge">Ll</span>Linalool</div>
+      <div class="chip terp" data-terp="Pinene"        ><span class="badge">P</span>Pinene</div>
+      <div class="chip terp" data-terp="Terpinolene"   ><span class="badge">T</span>Terpinolene</div>
+      <a style="margin-left:auto;font-size:.9rem;text-decoration:underline;cursor:pointer" onclick="clearTerps()">Deselect all</a>
+    </div>
+  </section>
+
+  <!-- ================= LINEAGE FILTERS ================= -->
   <section>
     <h2 style="margin-top:32px;font-size:1.25rem;font-weight:600;">Lineage</h2>
     <div class="filter-row" id="lineage-row">
-      <div class="chip hybrid"   data-lineage="Hybrid" ><span class="badge">H</span>Hybrid <span class="count" id="hybrid-count"></span></div>
-      <div class="chip indica"   data-lineage="Indica" ><span class="badge">I</span>Indica <span class="count" id="indica-count"></span></div>
-      <div class="chip sativa"   data-lineage="Sativa" ><span class="badge">S</span>Sativa <span class="count" id="sativa-count"></span></div>
-      <div class="chip cbd"      data-lineage="CBD"    ><span class="badge">C</span>CBD <span class="count" id="cbd-count"></span></div>
+      <div class="chip hybrid" data-lineage="Hybrid"><span class="badge">H</span>Hybrid <span class="count" id="hybrid-count"></span></div>
+      <div class="chip indica" data-lineage="Indica"><span class="badge">I</span>Indica <span class="count" id="indica-count"></span></div>
+      <div class="chip sativa" data-lineage="Sativa"><span class="badge">S</span>Sativa <span class="count" id="sativa-count"></span></div>
+      <div class="chip cbd"    data-lineage="CBD"   ><span class="badge">C</span>CBD <span class="count" id="cbd-count"></span></div>
       <a style="margin-left:auto;font-size:.9rem;text-decoration:underline;cursor:pointer" onclick="clearLineage()">Deselect all</a>
     </div>
   </section>
 
-  <!-- results -->
+  <!-- ================= RESULTS ================= -->
   <div id="results"></div>
 
+  <!-- ================= SCRIPTS ================= -->
   <script src="script.js"></script>
   <script>
-    // --- Optional: toggle selection visual (no backend logic yet) ---
+    // Basic highlight toggle for chips added dynamically
     document.querySelectorAll('.chip').forEach(chip=>{
-      chip.addEventListener('click',()=>{
-        chip.classList.toggle('selected');
-      });
+      chip.addEventListener('click',()=> chip.classList.toggle('selected'));
     });
-    function clearLineage(){
-      document.querySelectorAll('#lineage-row .chip.selected').forEach(c=>c.classList.remove('selected'));
-    }
   </script>
 </body>
 </html>
+
