@@ -1,4 +1,101 @@
-<!-- terpene chips -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EntourageIQ · Strain Finder</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --hybrid:#000;        /* lineage border colours */
+      --indica:#7E3AED;
+      --sativa:#F97316;
+      --cbd:#64748B;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif;}
+
+    body{
+      background:#fff;
+      color:#111;
+      line-height:1.4;
+      padding:24px;
+      max-width:900px;
+      margin:auto;
+    }
+
+    h1{
+      font-size:2rem;
+      font-weight:600;
+      margin-bottom:24px;
+    }
+
+    /* (optional) text-search bar – delete if unused */
+    input[type="text"]{
+      width:100%;
+      padding:14px 18px;
+      border:2px solid #4ade80;
+      border-radius:6px;
+      font-size:1rem;
+      margin-bottom:32px;
+    }
+
+    /* ---------- filter chips ---------- */
+    .filter-row{display:flex;gap:18px;flex-wrap:wrap;margin:24px 0;}
+    .chip{
+      display:flex;align-items:center;
+      padding:14px 22px;
+      background:#f7f7f7;
+      border-radius:22px;
+      cursor:pointer;
+      transition:background .2s,color .2s;
+      min-width:160px;
+    }
+    .chip:hover{background:#ebebeb;}
+
+    /* highlight when selected */
+    .chip.selected{
+      background:#4ade80;      /* green fill */
+      color:#fff;
+    }
+    .chip.selected .badge{
+      border-color:#fff;
+      background:rgba(255,255,255,.2);
+      color:#fff;
+    }
+
+    .chip span.badge{
+      display:inline-flex;justify-content:center;align-items:center;
+      width:28px;height:28px;border-radius:6px;font-size:.8rem;font-weight:600;
+      margin-right:14px;
+    }
+    /* lineage badge colours */
+    .chip.hybrid   span.badge{border:2px solid var(--hybrid);color:var(--hybrid);}
+    .chip.indica   span.badge{border:2px solid var(--indica);color:var(--indica);}
+    .chip.sativa   span.badge{border:2px solid var(--sativa);color:var(--sativa);}
+    .chip.cbd      span.badge{border:2px solid var(--cbd);color:var(--cbd);}
+
+    .chip .count{opacity:.6;margin-left:4px;}
+
+    /* ---------- results list ---------- */
+    #results ul{list-style:none;margin-top:32px;}
+    #results li{
+      background:#f2f2f2;
+      border-radius:6px;
+      padding:16px;
+      margin-bottom:12px;
+    }
+    .strain{font-weight:600;margin-bottom:4px;}
+    .meta{font-size:.9rem;color:#555;}
+  </style>
+</head>
+
+<body>
+  <h1>Quick Terpene Search</h1>
+  <!-- search bar (remove if you rely only on chips) -->
+  <input id="q" type="text" placeholder="type a terpene & hit Enter…" autofocus /><!-- terpene chips -->
 <section>
   <h2 style="margin-top:32px;font-size:1.25rem;font-weight:600;">Terpenes</h2>
   <div class="filter-row" id="terpene-row">
