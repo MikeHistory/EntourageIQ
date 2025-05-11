@@ -1,39 +1,54 @@
+/********* load data *********/
 let db = [];
-
-// --------------- load data once -----------------
 fetch('products.json')
   .then(r => r.json())
-  .then(data => db = data)
-  .catch(err => alert('Could not load products.json: '+err));
+  .then(d => db = d)
+  .then(() => render())           // initial render
+  .catch(err => alert('Could not load products: '+err));
 
-// --------------- wire the input -----------------
-const q = document.getElementById('q');
-q.addEventListener('keydown', e => {
-  if (e.key === 'Enter') search(q.value.trim().toLowerCase());
+/********* helpers to collect selected filters *********/
+const getSelectedText = (sel) =>
+  [...document.querySelectorAll(sel+'.selected')]
+       .map(el => el.dataset.lineage || el.dataset.terp);
+
+function clearLineage(){ document.querySelectorAll('#lineage-row .selected')
+  .forEach(el => el.classList.remove('selected')); render(); }
+function clearTerps(){ document.querySelectorAll('#terpene-row .selected')
+  .forEach(el => el.classList.remove('selected')); render(); }
+
+/********* click-toggle on all chips *********/
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    chip.classList.toggle('selected');
+    render();
+  });
 });
 
-// --------------- render helper ------------------
-function render(list){
+/********* main filter + render *********/
+function render(){
+  const selTerps   = getSelectedText('#terpene-row .chip');
+  const selLineage = getSelectedText('#lineage-row .chip');
+
+  let list = db.slice();
+
+  if (selTerps.length){
+    selTerps.forEach(t=>{
+      list = list.filter(s =>
+        (s.Terpenes || '').toLowerCase().includes(t.toLowerCase()));
+    });
+  }
+  if (selLineage.length){
+    list = list.filter(s => selLineage.includes(s.Lineage));
+  }
+
   const box = document.getElementById('results');
   box.innerHTML = list.length
-    ? `<ul>${
-        list.map(s => `
-          <li>
-            <div class="strain">${s.Strain}</div>
-            <div class="meta">${s.Lineage} · ${s.Cultivator || 'Unknown Cultivator'}</div>
-            <div class="meta">CBG: ${s.CBG ?? 'n/a'}</div>
-            <div class="meta">${s.Terpenes}</div>
-          </li>`
-        ).join('')
-      }</ul>`
+    ? `<ul>${list.map(s => `
+        <li>
+          <div class="strain">${s.Strain}</div>
+          <div class="meta">${s.Lineage} · ${s.Cultivator || 'Unknown'}</div>
+          <div class="meta">CBG: ${s.CBG ?? 'n/a'}</div>
+          <div class="meta">${s.Terpenes}</div>
+        </li>`).join('')}</ul>`
     : '<p>No strains found.</p>';
-}
-
-// --------------- search function ----------------
-function search(term){
-  if (!term){ render([]); return; }
-  const hits = db.filter(s =>
-    (s.Terpenes || '').toLowerCase().includes(term)
-  );
-  render(hits);
 }
